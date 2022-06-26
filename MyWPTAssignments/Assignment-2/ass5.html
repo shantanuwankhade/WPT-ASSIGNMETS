@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+
+    <script>
+
+        $(()=>{
+
+            $("#account").blur(()=>{
+                console.log("blur evenr occured")
+                
+                let input={acno:$("#account").val()};
+                let parameterssend=
+                {
+                    data:input,
+                    url: "http://localhost:900/account",
+                    type:'get',
+                    dataType: "json",
+                    success:(datagivenbyserver)=>{
+
+                        if(datagivenbyserver.status==true){
+                            console.log("account no found");
+
+                            $("#msg").html(datagivenbyserver.balance.balance);
+
+
+                        }
+                        else{
+                            $("#msg").html("Account no not found");
+                        }
+
+                    },
+                    error:(err)=>{
+                       console.log("error occured"+err);
+
+                    }
+                };
+                $.ajax(parameterssend);
+
+
+
+
+            });
+        });
+    </script>
+
+</head>
+<body>
+    <input type="text" id="account" placeholder="account no.">
+    <span id="msg">account balance</span>
+</body>
+</html>
